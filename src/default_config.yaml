@@ -1,0 +1,64 @@
+# See Configuration Options section in README for more detailed explanations.
+
+# Configuration options for transcription models
+model_options:
+  # Set to true to use OpenAI's API, false for local model
+  use_api: false
+  
+  # Common options for both API and local models
+  common:
+    # Language code for transcription in ISO-639-1 format (e.g., 'en' for English)
+    language: null
+    # Controls randomness of transcription output (0.0 for deterministic results)
+    temperature: 0.0
+    # Initial prompt to condition the transcription (set to null for no prompt)
+    initial_prompt: null
+  
+  # Configuration for using OpenAI's API
+  api:
+    # Model to use for transcription via OpenAI (default: 'whisper-1')
+    model: whisper-1
+  
+  # Configuration for using a local Whisper model
+  local:
+    # Local model type (e.g., 'base', 'large')
+    model: base
+    # Device for running the model: 'auto', 'cpu', or 'cuda' for NVIDIA GPUs
+    device: auto
+    # Compute type for the model: 'auto', 'fp16', or 'fp32'
+    compute_type: auto
+    # Set to true to use previous text as prompt for continuous transcription
+    condition_on_previous_text: true
+    # True to use VAD filter to remove silence (default: false)
+    vad_filter: false
+
+# Configuration options for activation and recording
+recording_options:
+  # Keyboard shortcut to start recording (default: 'ctrl+shift+space')
+  activation_key: ctrl+shift+space
+  # Recording modes: 'voice_activity_detection', 'press_to_toggle', or 'hold_to_record'
+  recording_mode: voice_activity_detection
+  # Name of the sound device for recording (null for default)
+  sound_device: null
+  # Sample rate in Hz for recording (default: 16000)
+  sample_rate: 16000
+  # Duration in ms to wait for silence before stopping recording (default: 900)
+  silence_duration: 900
+
+# Post-processing options for the transcribed text
+post_processing:
+  # Delay between key presses when writing transcribed text (default: 0.005)
+  writing_key_press_delay: 0.005
+  # Set to true to remove the trailing period from transcribed text
+  remove_trailing_period: false
+  # Set to true to add a trailing space to transcribed text
+  add_trailing_space: true
+  # Set to true to convert all transcribed text to lowercase
+  remove_capitalization: false
+
+# Miscellaneous settings
+misc:
+  # Set to true to print script status and transcribed text to the terminal
+  print_to_terminal: true
+  # Set to true to hide the status window during operation
+  hide_status_window: false
