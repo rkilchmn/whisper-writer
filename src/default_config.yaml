@@ -8,7 +8,7 @@ model_options:
   # Common options for both API and local models
   common:
     # Language code for transcription in ISO-639-1 format (e.g., 'en' for English)
-    language: null
+    language: auto
     # Controls randomness of transcription output (0.0 for deterministic results)
     temperature: 0.0
     # Initial prompt to condition the transcription (set to null for no prompt)
@@ -25,8 +25,8 @@ model_options:
     model: base
     # Device for running the model: 'auto', 'cpu', or 'cuda' for NVIDIA GPUs
     device: auto
-    # Compute type for the model: 'auto', 'fp16', or 'fp32'
-    compute_type: auto
+    # Compute type for the model: 'default', 'fp16', or 'fp32'
+    compute_type: default
     # Set to true to use previous text as prompt for continuous transcription
     condition_on_previous_text: true
     # True to use VAD filter to remove silence (default: false)
@@ -38,8 +38,8 @@ recording_options:
   activation_key: ctrl+shift+space
   # Recording modes: 'voice_activity_detection', 'press_to_toggle', or 'hold_to_record'
   recording_mode: voice_activity_detection
-  # Name of the sound device for recording (null for default)
-  sound_device: null
+  # Name of the sound device for recording (auto for default)
+  sound_device: auto
   # Sample rate in Hz for recording (default: 16000)
   sample_rate: 16000
   # Duration in ms to wait for silence before stopping recording (default: 900)
