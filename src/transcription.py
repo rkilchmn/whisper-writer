@@ -7,16 +7,23 @@ import tempfile
 import wave
 import webrtcvad
 from dotenv import load_dotenv
-from faster_whisper import WhisperModel
+# from faster_whisper import WhisperModel
+from faster_whisper_remote_proxy import WhisperModelRemoteProxy
+import faster_whisper_remote_proxy
 import keyboard
-import torch
+# import torch
 
 
 """
 Create a local model using the faster_whisper library.
 """
 def create_local_model(config):
-    if torch.cuda.is_available() and config['local_model_options']['device'] != 'cpu':
+    if config['local_model_options']['remote_faster_whisper_url']:
+        faster_whisper_remote_proxy.remote_url = config['local_model_options']['remote_faster_whisper_url']
+        model = WhisperModelRemoteProxy(config['local_model_options']['model'],
+                                 device=config['local_model_options']['device'],
+                                 compute_type=config['local_model_options']['compute_type'])
+    elif torch.cuda.is_available() and config['local_model_options']['device'] != 'cpu':
         try:
             model = WhisperModel(config['local_model_options']['model'],
                                  device=config['local_model_options']['device'],
