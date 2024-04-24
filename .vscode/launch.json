@@ -9,7 +9,11 @@
             "type": "debugpy",
             "request": "launch",
             "program": "run.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "OPENAI_API_BASE" : "http://127.0.0.1:8080/inference"
+            }
         }
     ]
 }

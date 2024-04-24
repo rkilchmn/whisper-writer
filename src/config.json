@@ -1,5 +1,5 @@
 {
-    "use_api": false,
+    "use_api": true,
     "api_options": {
         "model": "whisper-1",
         "language": null,
@@ -15,7 +15,7 @@
         "initial_prompt": null,
         "condition_on_previous_text": true,
         "vad_filter": false,
-        "remote_faster_whisper_url": "http://localhost:9876/api/v0/transcribe"  
+        "remote_faster_whisper_url": "http://192.168.0.41:9876/api/v0/transcribe"  
     },
     "activation_key": "ctrl+shift+space",
     "recording_mode": "voice_activity_detection",
