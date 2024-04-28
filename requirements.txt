@@ -63,4 +63,4 @@ typing_extensions==4.6.2
 urllib3==2.0.2
 webrtcvad-wheels==2.0.11.post1
 yarl==1.9.2
-git+https://github.com/rkilchmn/faster_whisper_api_proxy.git
+faster_whisper_api_proxy
