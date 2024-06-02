@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+### Added
+- New settings window to configure WhisperWriter.
+- New main window to either start the keyboard listener or open the settings window.
+- New continuous recording mode ([Issue #40](https://github.com/savbell/whisper-writer/issues/40)).
+- New option to play a sound when transcription finishes ([Issue #40](https://github.com/savbell/whisper-writer/issues/40)).
+
+### Changed
+- Migrated status window from using `tkinter` to `PyQt5`.
+- Migrated from using JSON to using YAML to store configuration settings.
+- Upgraded to latest versions of `openai` and `faster-whisper`, including support for local API ([Issue #32](https://github.com/savbell/whisper-writer/issues/32)).
+
+### Removed
+- No longer using `keyboard` package to listen for key presses.
+
 ## [1.0.1] - 2024-01-28
 ### Added
 - New message to identify whether Whisper was being called using the API or running locally.
