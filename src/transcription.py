@@ -173,7 +173,7 @@ def transcribe(status_queue, cancel_flag, config, audio_file, local_model=None):
         return ''
     
     status_queue.put(('transcribing', 'Transcribing...'))
-    print('Transcribing audio file...') if config['print_to_terminal'] else ''
+    print(f'Transcribing audio file ({audio_file})...') if config['print_to_terminal'] else ''
     
     # If configured, transcribe the temporary audio file using the OpenAI API
     if config['use_api']:
