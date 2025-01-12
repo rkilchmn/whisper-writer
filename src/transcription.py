@@ -2,7 +2,7 @@ import io
 import os
 import numpy as np
 import soundfile as sf
-from faster_whisper import WhisperModel
+# from faster_whisper import WhisperModel
 from openai import OpenAI
 # start enhancement for faster whisper api
 # from faster_whisper import WhisperModel
@@ -16,19 +16,31 @@ def create_local_model():
     """
     Create a local model using the faster-whisper library.
     """
-    print('Creating local model...') if config['misc']['print_to_terminal'] else ''
-    local_model_options = config['model_options']['local']
-    # start enhancement for faster whisper api
-    faster_whisper_api_base_url=local_model_options['faster_whisper_api_base_url']
-    if faster_whisper_api_base_url:
-        set_proxy_paramters( api_base=faster_whisper_api_base_url)
-        model = WhisperModelApiProxy(local_model_options['model'],
-                                 device=local_model_options['device'],
-                                 compute_type=local_model_options['compute_type'])
-        print(f'Using Faster Whisper API: {faster_whisper_api_base_url}') if config['misc']['print_to_terminal'] else ''
-    # end enhancement faster whisper api
-    elif torch.cuda.is_available() and local_model_options['device'] != 'cpu':
-        try:
+    ConfigManager.console_print('Creating local model...')
+    local_model_options = ConfigManager.get_config_section('model_options')['local']
+    compute_type = local_model_options['compute_type']
+    model_path = local_model_options.get('model_path')
+
+    if compute_type == 'int8':
+        device = 'cpu'
+        ConfigManager.console_print('Using int8 quantization, forcing CPU usage.')
+    else:
+        device = local_model_options['device']
+
+    try:
+        if model_path:
+            ConfigManager.console_print(f'Loading model from: {model_path}')
+            model = WhisperModel(model_path,
+                                 device=device,
+                                 compute_type=compute_type,
+                                 download_root=None)  # Prevent automatic download
+        elif local_model_options['faster_whisper_api_base_url']:
+            set_proxy_paramters( api_base=local_model_options['faster_whisper_api_base_url'])
+            model = WhisperModelApiProxy(local_model_options['model'],
+                                    device=local_model_options['device'],
+                                    compute_type=local_model_options['compute_type'])
+            ConfigManager.console_print(f"Using Faster Whisper API: {local_model_options['faster_whisper_api_base_url']}")
+        else:
             model = WhisperModel(local_model_options['model'],
                                  device=device,
                                  compute_type=compute_type)
@@ -41,6 +53,25 @@ def create_local_model():
                              download_root=None if model_path else None)
 
     ConfigManager.console_print('Local model created.')
+    return model
+
+def create_remote_model():
+
+    """
+    Create a remote model using the faster-whisper library.
+    """
+    model_options = ConfigManager.get_config_section('model_options')
+    ConfigManager.console_print('Creating remote model...')
+    local_model_options = model_options['local']
+    # start enhancement for faster whisper api
+    faster_whisper_api_base_url=local_model_options['faster_whisper_api_base_url']
+    if faster_whisper_api_base_url:
+        set_proxy_paramters( api_base=faster_whisper_api_base_url)
+        model = WhisperModelApiProxy(local_model_options['model'],
+                                 device=local_model_options['device'],
+                                 compute_type=local_model_options['compute_type'])
+        ConfigManager.console_print(f'Using Faster Whisper API: {faster_whisper_api_base_url}')
+    
     return model
 
 def transcribe_local(audio_data, local_model=None):
