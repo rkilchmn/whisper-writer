@@ -5,7 +5,7 @@ misc:
 model_options:
   api:
     api_key: null
-    base_url: https://api.openai.com/v1
+    base_url: http://127.0.0.1:8080/inference
     model: whisper-1
   common:
     initial_prompt: null

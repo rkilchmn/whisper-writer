@@ -4,13 +4,15 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
-            "name": "Python Debugger: Current File",
+            "name": "Python Debugger: Whisper Writer",
             "type": "debugpy",
             "request": "launch",
-            "program": "run.py",
+            "program": "src/main.py",
             "console": "integratedTerminal",
             "justMyCode": false,
+            "args": ["-Xfrozen_modules=off"],
             "env": {
                 "OPENAI_API_BASE" : "http://127.0.0.1:8080/inference"
             }
